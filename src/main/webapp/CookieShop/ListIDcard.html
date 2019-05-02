@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        //XMLHttpRequest
+        var req=new XMLHttpRequest();
+        req.open('POST','/hello/CookieShop');
+        //必须加此头，否则服务器不知道请求体的数据格式，如果是请求体是json格式，则此头变为application/json
+        req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        req.send('key1=val1&key2=val2');
+        var arr=null;
+        req.onload=function (ev) {
+            var val=JSON.parse(this.responseText);
+            if(val[0].data!=null&&val[0].data.length!=0)
+            {
+                var para=document.createElement("ul");
+                var title=document.createElement("li");
+                title.setAttribute("class","t");
+                title.appendChild(document.createTextNode(val[0].title));
+                para.appendChild(title);
+                var tias=new Array("身份证号","注册日期","注册地址","有效期(年)","操作");
+                for(var i=0;i<tias.length;i++)
+                {
+                    var no=document.createElement("li");
+                    no.appendChild(document.createTextNode(tias[i]));
+                    para.appendChild(no);
+                }
+                for(var i=0;i<val[0].data.length;i++)
+                {
+                    var no=document.createElement("li");
+                    no.appendChild(document.createTextNode(val[0].data[i].identity));
+                    para.appendChild(no);
+                    var no1=document.createElement("li");
+                    var myDate=new Date(val[0].data[i].beginDate);
+                    no1.appendChild(document.createTextNode(myDate.toLocaleString()));
+                    no1.setAttribute("class", "bir");
+                    para.appendChild(no1);
+                    var no2=document.createElement("li");
+                    no2.appendChild(document.createTextNode(val[0].data[i].handlerAddr));
+                    para.appendChild(no2);
+                    var no3=document.createElement("li");
+                    no3.appendChild(document.createTextNode(val[0].data[i].expiry));
+                    para.appendChild(no3);
+                    var no4=document.createElement("li");
+                    no4.setAttribute("id",val[0].data[i].identity);
+                    arr=no4;
+                    no4.onclick=function () {
+                        arr.style.background="#ccc";
+                        this.style.background="red";
+                        arr=this;
+                        var req1=new XMLHttpRequest();
+                        var he="/hello/CookieShopInfo?id=";
+                        req1.open('GET',he+this.id);
+                        req1.send();
+                        req1.onload=function () {
+                            var peopleInfo=JSON.parse(this.responseText);
+                            var uul=document.getElementById("u").getElementsByTagName("li");
+                            console.log(peopleInfo);
+                            console.log(uul.length);
+                            uul[1].innerText=peopleInfo.name;
+                            uul[3].innerText=(peopleInfo.sex==1?"男":"女");
+                            uul[5].innerText=new Date(peopleInfo.birthday).toLocaleDateString();
+                            uul[7].innerText=peopleInfo.address;
+                            uul[9].innerText=peopleInfo.education;
+                            uul[11].innerText=peopleInfo.phone;
+                            uul[13].innerText=peopleInfo.email;
+                            uul[15].innerText=peopleInfo.regAddrId;
+                        }
+                    };
+                    no4.setAttribute("class","a");
+
+                    no4.appendChild(document.createTextNode("查看信息"));
+                    para.appendChild(no4);
+                }
+                var d1=document.getElementById("d1");
+                d1.appendChild(para);
+            }
+
+        }
+    </script>
+
+    <title>ListIDcard</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            color: #000;
+        }
+
+        ul{
+            width: 908px;
+            margin: 30px auto;
+        }
+
+        li{
+            list-style-type: none;
+            width: 180px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            float: left;
+            margin-left: 1px;
+            margin-bottom: 1px;
+            background: #ccc;
+        }
+        .t{
+            list-style-type: none;
+            width: 904px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-weight: bold ;
+            font-size: 16px;
+            margin-left: 1px;
+            margin-bottom: 1px;
+            float: left;
+        }
+        .a{
+            list-style-type: none;
+            width: 180px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: blue;
+            float: left;
+            margin-left: 1px;
+            margin-bottom: 1px;
+            background: #ccc;
+        }
+        .bir {
+            list-style-type: none;
+            width: 180px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            float: left;
+            margin-left: 1px;
+            margin-bottom: 1px;
+            background: #ccc;
+        }
+        #u{
+            width: 502px;
+            margin:30px auto;
+        }
+        #u>li{
+            width: 250px;
+            background:#f5f5f5;
+        }
+
+    </style>
+</head>
+<body>
+<div style="margin:0 auto;width:1000px">
+<div id="d1" style="float:left;width:1000px"></div>
+<div id="d2" style="float:left;width:1000px"></div>
+<ul id="u">
+    <li>姓名</li>
+    <li></li>
+    <li>性别</li>
+    <li></li>
+    <li>生日</li>
+    <li></li>
+    <li>住址</li>
+    <li></li>
+    <li>教育程度</li>
+    <li></li>
+    <li>手机号</li>
+    <li></li>
+    <li>email</li>
+    <li></li>
+    <li>户籍所在地</li>
+    <li></li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        function refreshImg(value) {
+            value.src=value.src+"?"+new Date().getTime();
+        }
+
+    </script>
+    <title>Title</title>
+</head>
+<body>
+<form action="">
+    用户名:<input type="text" value="请输入用户名" onclick="this.value=''"/> <br/>
+    密码:<input type="text" value="请输入密码" onclick="this.type='password';this.value=''"/> <br/>
+    验证码:<input type="text" value="请输入验证码" onclick="this.value=''"/><img src="/hello/ServletResponseTest" onclick="refreshImg(this)" alt="换一张" style="cursor: hand"> <br/>
+    <input type="submit" value="注册"/>
+</form>
+</body>
+</html>
