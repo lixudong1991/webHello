@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/hello/jsLib/template-web.js"></script>
+    <script id="test" type="text/html">
+        <h1 class="t">{{title}}</h1>
+        <ul>
+            {{each data as value i}}
+            <li>{{value}}</li>
+            {{/each}}
+        </ul>
+    </script>
+
     <script type="text/javascript">
         //XMLHttpRequest
         var req=new XMLHttpRequest();
@@ -76,7 +86,8 @@
                 var d1=document.getElementById("d1");
                 d1.appendChild(para);
             }
-
+            var history = template('test', val[1]);
+            document.getElementById('d3').innerHTML = history;
         }
     </script>
 
@@ -148,31 +159,38 @@
             width: 250px;
             background:#f5f5f5;
         }
-
+        #d3>ul>li {
+            width: 300px;
+            background:#4BD1F5;
+        }
     </style>
 </head>
 <body>
 <div style="margin:0 auto;width:1000px">
 <div id="d1" style="float:left;width:1000px"></div>
 <div id="d2" style="float:left;width:1000px"></div>
-<ul id="u">
-    <li>姓名</li>
-    <li></li>
-    <li>性别</li>
-    <li></li>
-    <li>生日</li>
-    <li></li>
-    <li>住址</li>
-    <li></li>
-    <li>教育程度</li>
-    <li></li>
-    <li>手机号</li>
-    <li></li>
-    <li>email</li>
-    <li></li>
-    <li>户籍所在地</li>
-    <li></li>
-</ul>
+    <div  style="float:left;width:1000px">
+        <ul id="u">
+            <li>姓名</li>
+            <li></li>
+            <li>性别</li>
+            <li></li>
+            <li>生日</li>
+            <li></li>
+            <li>住址</li>
+            <li></li>
+            <li>教育程度</li>
+            <li></li>
+            <li>手机号</li>
+            <li></li>
+            <li>email</li>
+            <li></li>
+            <li>户籍所在地</li>
+            <li></li>
+        </ul>
+    </div>
+    <div id="d3" style="float:left;width:1000px"></div>
 </div>
+
 </body>
 </html>

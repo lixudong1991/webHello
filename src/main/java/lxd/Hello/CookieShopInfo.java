@@ -35,7 +35,7 @@ public class CookieShopInfo extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/json;charset=UTF-8");
         PrintWriter writer=response.getWriter();
         String id=request.getParameter("id");
         People people=null;
